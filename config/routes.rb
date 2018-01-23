@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get 'prices/*type/all',     to: 'prices#all'
+
+  get 'prices/*type/average', to: 'prices#average'
+
+  get 'prices/*type/highest', to: 'prices#highest'
+
+  get 'prices/*type/lowest',  to: 'prices#lowest'
 end
