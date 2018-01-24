@@ -17,7 +17,7 @@ class RedisHistory
   end
 
   def self.redis
-    @redis ||= Redis.new(url: "#{ENV["REDIS_URL"]}/#{@type}")
+    @redis ||= Redis.new(url: "redis://#{ENV["REDIS_URL"]}/#{@type}")
   end
 end
 
