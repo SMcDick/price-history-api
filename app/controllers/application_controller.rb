@@ -24,6 +24,6 @@ class ApplicationController < ActionController::API
     errors = []
     errors << "You must include at list one ASIN" unless params.has_key?(:asins)
     errors << "price type '#{params[:type]}' is not permitted" unless type_valid?
-    render json: {errors: errors} if errors
+    render json: {errors: errors} unless errors.empty?
   end
 end
