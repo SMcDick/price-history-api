@@ -6,6 +6,7 @@ class PricesController < ApplicationController
   end
 
   def average
+    render json: history.averages
   end
 
   def highest

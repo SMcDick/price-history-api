@@ -16,6 +16,18 @@ class RedisHistory
     result
   end
 
+  def averages(data=nil)
+    averages = {}
+    all.each do |asin, history|
+      begin
+        averages[asin] = history.sum {|time, rank| rank.to_i } / history.size
+      rescue ZeroDivisionError
+        averages[asin] = nil
+      end
+    end
+    averages
+  end
+
   def redis
     @redis ||= Redis.new(url: "redis://#{ENV["REDIS_URL"]}/#{@type}")
   end
