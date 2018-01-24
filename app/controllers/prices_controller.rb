@@ -1,17 +1,16 @@
 class PricesController < ApplicationController
+  before_action :check_params
+
   def all
-    render json: params[:type]
+    render json: history.all
   end
 
   def average
-    render json: params[:type]
   end
 
   def highest
-    render json: params[:type]
   end
 
   def lowest
-    render json: params[:type]
   end
 end
