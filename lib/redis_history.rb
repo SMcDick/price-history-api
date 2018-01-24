@@ -6,9 +6,9 @@ class RedisHistory
 
   def all
     result = {}
-    self.class.redis.pipelined do
+    redis.pipelined do
       @asins.each do |asin|
-        history = self.class.redis.hgetall asin
+        history = redis.hgetall asin
         result[asin] = history
       end
     end
@@ -16,7 +16,7 @@ class RedisHistory
     result
   end
 
-  def self.redis
+  def redis
     @redis ||= Redis.new(url: "redis://#{ENV["REDIS_URL"]}/#{@type}")
   end
 end
