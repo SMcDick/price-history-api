@@ -16,7 +16,14 @@ class ApplicationController < ActionController::API
     RedisHistory.new(asins, params[:type])
   end
 
+  def type_valid?
+    %w(used new trade amazon).include?(params[:type])
+  end
+
   def check_params
-    render json: {error: "You must include at list one ASIN"}, status: 400 if params[:asins].nil? || params[:asins].empty?
+    errors = []
+    errors << "You must include at list one ASIN" unless params.has_key?(:asins)
+    errors << "price type '#{params[:type]}' is not permitted" unless type_valid?
+    render json: {errors: errors} if errors
   end
 end
