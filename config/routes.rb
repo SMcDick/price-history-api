@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   get 'prices/*type/highest', to: 'prices#highest'
 
   get 'prices/*type/lowest',  to: 'prices#lowest'
+
+  get 'buyback', to: 'buyback#index'
 end

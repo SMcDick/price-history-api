@@ -6,6 +6,12 @@ gem 'redis', '~> 3.0'
 gem 'sqlite3'
 gem 'httparty'
 gem 'dotenv-rails'
+gem 'faraday'
+gem 'faraday_middleware'
+gem 'faraday-request-timer'
+gem 'redis-rails'
+gem "redis-store"
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
