@@ -12,6 +12,7 @@ require "action_cable/engine"
 require "./lib/redis_history"
 require "./lib/buyback"
 require "./lib/timeframes"
+require "./lib/redis_client"
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 

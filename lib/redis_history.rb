@@ -1,7 +1,7 @@
 class RedisHistory
   def initialize(asins, type)
     @asins = asins
-    @type = {"used" => 0, "new" => 1, "trade" => 2, "amazon" => 3, "missing" => 4}[type]
+    @type = type
   end
 
   def all
@@ -12,7 +12,10 @@ class RedisHistory
         result[asin] = history
       end
     end
-    result.each {|k,v| result[k] = v.value }
+    result.each do |k,v|
+      RedisClient.missing.set(asin, Time.now.to_i) if v.value.empty?
+      result[k] = v.value
+    end
     result
   end
 
@@ -65,7 +68,7 @@ class RedisHistory
   end
 
   def redis
-    @redis ||= Redis.new(url: "redis://#{ENV["REDIS_URL"]}/#{@type}")
+    @redis ||= RedisClient.send(@type)
   end
 end
 
