@@ -12,8 +12,9 @@ class ApplicationController < ActionController::API
     params[:asins].split(",")
   end
 
-  def history
-    RedisHistory.new(asins, params[:type])
+  def history(type=nil)
+    type = type || params[:type]
+    RedisHistory.new(asins, type)
   end
 
   def type_valid?

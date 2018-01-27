@@ -11,6 +11,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 require "./lib/redis_history"
 require "./lib/buyback"
+require "./lib/timeframes"
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 

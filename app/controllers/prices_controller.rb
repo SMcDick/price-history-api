@@ -10,8 +10,16 @@ class PricesController < ApplicationController
   end
 
   def highest
+    render json: history.edge_value(:last)
   end
 
   def lowest
+    render json: history.edge_value(:first)
+  end
+
+  def average_by_range
+    used, trade = Timeframes.defaults.map{|k,v| history(k).by_timeframe(v)}
+    result = used.update(trade){|k,o,n| o.merge(n)}
+    render json: result
   end
 end
