@@ -13,7 +13,7 @@ class RedisHistory
       end
     end
     result.each do |k,v|
-      RedisClient.missing.set(asin, Time.now.to_i) if v.value.empty?
+      RedisClient.missing.set(k, Time.now.to_i) if v.value.empty?
       result[k] = v.value
     end
     result
