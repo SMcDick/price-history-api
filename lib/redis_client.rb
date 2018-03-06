@@ -15,7 +15,7 @@ class RedisClient
     end
 
     def db(type)
-      {used: 12, new: 13, trade: 14, amazon: 15}[type]
+      {used: 0, new: 1, trade: 2, amazon: 3}[type]
     end
 
     def redis(db)

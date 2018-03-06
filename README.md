@@ -1,24 +1,19 @@
-# README
+EB Commands:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+rails console:
 
-Things you may want to cover:
+$ eb ssh
+`ssh> cd /var/app/current && bin/rails c`
 
-* Ruby version
+rails logs:
 
-* System dependencies
+$ eb ssh
+`ssh> cd /var/app/current && tail -f log/*.log`
 
-* Configuration
+deploy:
 
-* Database creation
+$ eb deploy
 
-* Database initialization
+status:
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+$ eb status
