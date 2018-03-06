@@ -1,7 +1,9 @@
 class RedisHistory
-  def initialize(asins, type)
+  def initialize(asins, type, max_age)
     @asins = asins
     @type = type
+    @max_age = max_age.to_i
+    @minimum_age = 60.days.ago
   end
 
   def all
@@ -14,9 +16,14 @@ class RedisHistory
     end
     result.each do |k,v|
       RedisClient.missing.set(k, Time.now.to_i) if v.value.empty?
-      result[k] = v.value
+      result[k] = v.value.select{|k,v| k.to_i > @max_age}
     end
     result
+  end
+
+  def last_year
+    selected = all.map{|k,v| [k, this_month_last_year(v)] }.to_h
+    averages(selected)
   end
 
   def averages(data=nil)
@@ -70,5 +77,15 @@ class RedisHistory
   def redis
     @redis ||= RedisClient.send(@type)
   end
+
+  private
+
+  def this_month_last_year(value)
+    value.select do |k,v|
+      ts = Time.at(k.to_i)
+      ts.year == 1.year.ago.year && ts.month == Time.now.month
+    end
+  end
+
 end
 

@@ -14,7 +14,11 @@ class ApplicationController < ActionController::API
 
   def history(type=nil)
     type = type || params[:type]
-    RedisHistory.new(asins, type)
+    RedisHistory.new(asins, type, timeframe)
+  end
+
+  def timeframe
+    params[:timeframe]&.respond_to?(:to_i) ? params[:timeframe].to_i.months.ago : 1.year.ago
   end
 
   def type_valid?

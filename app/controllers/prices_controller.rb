@@ -9,6 +9,10 @@ class PricesController < ApplicationController
     render json: history.averages
   end
 
+  def last_year
+    render json: history.last_year
+  end
+
   def highest
     render json: history.edge_value(:last)
   end
