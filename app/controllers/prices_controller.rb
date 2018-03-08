@@ -13,14 +13,6 @@ class PricesController < ApplicationController
     render json: history.last_year
   end
 
-  def highest
-    render json: history.edge_value(:last)
-  end
-
-  def lowest
-    render json: history.edge_value(:first)
-  end
-
   def extrema
     render json: history.extrema
   end
