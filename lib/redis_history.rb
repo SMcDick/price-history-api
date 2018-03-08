@@ -39,10 +39,18 @@ class RedisHistory
     averages
   end
 
-  def edge_value(opt)
+  def extrema
     result = {}
-    all.each do |asin, history|
-      result[asin] = history.values.empty? ? nil : [history.sort_by{|k,v| v.to_i}.send(opt)].to_h
+    all.each do |asin, hhist|
+      sorted = hhist.sort_by{|k,v| v.to_i}
+      result[asin] = if hhist.values.empty?
+        nil
+      else
+        {
+          lowest: {recorded_at: sorted.first.first, price: sorted.first.last},
+          highest: {recorded_at: sorted.last.first, price: sorted.last.last}
+        }
+      end
     end
     result
   end
