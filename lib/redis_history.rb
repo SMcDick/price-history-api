@@ -39,18 +39,10 @@ class RedisHistory
     averages
   end
 
-  def extrema
+  def highest_and_lowest
     result = {}
-    all.each do |asin, hhist|
-      sorted = hhist.sort_by{|k,v| v.to_i}
-      result[asin] = if hhist.values.empty?
-        nil
-      else
-        {
-          lowest: {recorded_at: sorted.first.first, price: sorted.first.last},
-          highest: {recorded_at: sorted.last.first, price: sorted.last.last}
-        }
-      end
+    all.each do |asin, history|
+      result[asin] = history.any? ? extrema(history) : nil
     end
     result
   end
@@ -58,18 +50,13 @@ class RedisHistory
   def by_timeframe(timeframe)
     result = hash_tree
     seasons = Timeframes.send(timeframe)
+    data = all
     seasons.each do |season, timestamps|
       lower, upper = timestamps
-      selected = all.map{|k,v| [k, v.select{|time, value| time.to_s.between?(lower, upper)}] }.to_h
+      selected = data.map{|k,v| [k, v.select{|time, value| time.to_s.between?(lower, upper)}] }.to_h
       selected.each do |asin, history|
         if history.values.any?
-          sorted = history.sort_by{|k,v| v.to_i}
-          res = {
-            average: history.sum {|time, rank| rank.to_i } / history.size,
-            highest: {sorted.last.first => sorted.last.last},
-            lowest: {sorted.first.first => sorted.first.last},
-          }
-          result[asin][@type][season] = res
+          result[asin][@type][season] = extrema(history)
         else
           result[asin] = {}
         end
@@ -95,5 +82,13 @@ class RedisHistory
     end
   end
 
+  def extrema(history)
+    sorted = history.sort_by{|k,v| v.to_i}
+    {
+      average: sorted.sum{|h| h.last.to_i} / sorted.size,
+      lowest: {recorded_at: sorted.first.first, price: sorted.first.last},
+      highest: {recorded_at: sorted.last.first, price: sorted.last.last}
+    }
+  end
 end
 

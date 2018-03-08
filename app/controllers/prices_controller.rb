@@ -14,7 +14,7 @@ class PricesController < ApplicationController
   end
 
   def extrema
-    render json: history.extrema
+    render json: history.highest_and_lowest
   end
 
   def average_by_range
