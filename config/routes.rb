@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/prices/*type/meta',    to: 'prices#meta'
   get 'prices/*type/all',               to: 'prices#all'
   get 'prices/*type/extrema',           to: 'prices#extrema'
   get 'prices/*type/average',           to: 'prices#average'

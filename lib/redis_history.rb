@@ -65,6 +65,21 @@ class RedisHistory
     result
   end
 
+  def meta
+    result = {}
+    all.each do |asin, history|
+      timestamps = history.keys
+      first, last = Time.at(timestamps.min.to_i), Time.at(timestamps.max.to_i)
+      result[asin] = {
+        first_appeared: first,
+        last_logged: last,
+        eligible_for_averages: first < @minimum_age,
+        history_size: timestamps.size
+      }
+    end
+    result
+  end
+
   def hash_tree
     Hash.new { |hash, key| hash[key] = Hash.new(&hash.default_proc) }
   end

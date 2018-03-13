@@ -1,5 +1,5 @@
 class PricesController < ApplicationController
-  before_action :check_params
+  before_action :check_params, except: :meta
 
   def all
     render json: history.all
@@ -11,6 +11,10 @@ class PricesController < ApplicationController
 
   def last_year
     render json: history.last_year
+  end
+
+  def meta
+    render json: history.meta
   end
 
   def extrema
