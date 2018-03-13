@@ -15,7 +15,7 @@ class RedisHistory
       end
     end
     result.each do |k,v|
-      RedisClient.missing.set(k, Time.now.to_i) if v.value.empty?
+      # RedisClient.missing.set(k, Time.now.to_i) if v.value.empty?
       result[k] = v.value.select{|k,v| k.to_i > @max_age}
     end
     result
