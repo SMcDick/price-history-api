@@ -8,17 +8,22 @@ class RedisHistory
 
   def all
     result = {}
-    redis.pipelined do
+    # redis.pipelined do
       @asins.each do |asin|
-        history = redis.hgetall asin
+        history = Rails.cache.fetch(@asin, expires_in: 24.hours){ rget(asin) }
         result[asin] = history
       end
-    end
+    # end
     result.each do |k,v|
       # RedisClient.missing.set(k, Time.now.to_i) if v.value.empty?
-      result[k] = v.value.select{|k,v| k.to_i > @max_age}
+      result[k] = v.select{|k,v| k.to_i > @max_age}
     end
     result
+  end
+
+  def rget(asin)
+    puts "no cache hit"
+    redis.hgetall asin
   end
 
   def last_year
