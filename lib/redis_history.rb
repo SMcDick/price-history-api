@@ -10,7 +10,7 @@ class RedisHistory
     result = {}
     # redis.pipelined do
       @asins.each do |asin|
-        history = Rails.cache.fetch(@asin, expires_in: 24.hours){ redis.hgetall asin }
+        history = Rails.cache.fetch(asin, expires_in: 24.hours){ redis.hgetall asin }
         result[asin] = history
       end
     # end
