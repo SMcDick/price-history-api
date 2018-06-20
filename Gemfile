@@ -11,7 +11,7 @@ gem 'faraday_middleware'
 gem 'faraday-request-timer'
 gem 'redis-rails'
 gem "redis-store"
-
+gem 'rollbar'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
