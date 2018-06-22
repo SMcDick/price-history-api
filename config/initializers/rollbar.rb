@@ -1,7 +1,9 @@
 Rollbar.configure do |config|
   # Without configuration, Rollbar is enabled in all environments.
   # To disable in specific environments, set config.enabled=false.
-
+  config.exception_level_filters.merge!({
+    'ActionController::RoutingError' => 'ignore'
+  })
   config.access_token = '9342dc9d66404f80b74d778eff30956d'
 
   # Here we'll disable in 'test':
