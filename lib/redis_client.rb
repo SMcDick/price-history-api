@@ -1,6 +1,6 @@
 class RedisClient
   class << self
-    [:used, :new, :trade, :amazon].each do |type|
+    [:used, :new, :trade, :amazon, :n_used, :n_new, :n_trade, :n_amazon].each do |type|
       define_method :"#{type}" do
         self.redis("#{base}/#{self.db(type)}")
       end
@@ -15,7 +15,7 @@ class RedisClient
     end
 
     def db(type)
-      {used: 0, new: 1, trade: 2, amazon: 3}[type]
+      {used: 0, new: 1, trade: 2, amazon: 3, n_used: 4, n_new: 5, n_trade: 6, n_amazon: 7}[type]
     end
 
     def redis(db)
