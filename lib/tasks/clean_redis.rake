@@ -159,7 +159,7 @@ task :compact do
         months.delete(k) if sum.zero?
       end
 
-      redis.del(asin)
+      # redis.del(asin)
       puts n_redis.hmset(asin, *months) if months.any?
     end
   end
