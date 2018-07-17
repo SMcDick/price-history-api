@@ -126,13 +126,14 @@ require 'redis'
 require 'logger'
 
 task :compact do
-  redis = RedisClient.trade
-  n_redis = RedisClient.n_trade
+  redis = RedisClient.used
+  n_redis = RedisClient.n_used
   # puts redis.info["used_memory_human"]
   cursor = 0
   asins = [0]
-  while asins.any?
+  while cursor != "0"
     cursor, asins = redis.scan(cursor)
+    puts asins
     asins.each do |asin|
       data = begin
         redis.hgetall(asin)
@@ -162,6 +163,7 @@ task :compact do
       # redis.del(asin)
       puts n_redis.hmset(asin, *months) if months.any?
     end
+    # break if cursor == "0"
   end
 end
 
