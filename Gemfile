@@ -12,10 +12,12 @@ gem 'faraday-request-timer'
 gem 'redis-rails'
 gem "redis-store"
 gem 'rollbar'
+gem 'curb'
+gem 'pry'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'pry'
+
   gem 'rspec-rails'
 end
 
