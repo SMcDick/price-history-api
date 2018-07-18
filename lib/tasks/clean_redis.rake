@@ -124,7 +124,7 @@
 
 require 'redis'
 require 'logger'
-require 'pry'
+# require 'pry'
 
 task compact: :environment do
   redis = RedisClient.used
