@@ -133,7 +133,6 @@ task :compact do
   asins = [0]
   while cursor != "0"
     cursor, asins = redis.scan(cursor)
-    puts asins
     asins.each do |asin|
       data = begin
         redis.hgetall(asin)
@@ -161,7 +160,11 @@ task :compact do
       end
 
       # redis.del(asin)
-      puts n_redis.hmset(asin, *months) if months.any?
+      begin
+        n_redis.hmset(asin, *months) if months.any?
+      rescue
+        binding.pry
+      end
     end
     # break if cursor == "0"
   end
