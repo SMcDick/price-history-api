@@ -126,7 +126,7 @@ require 'redis'
 require 'logger'
 require 'pry'
 
-task :compact do
+task compact: :environment do
   redis = RedisClient.used
   n_redis = RedisClient.n_used
   # puts redis.info["used_memory_human"]
