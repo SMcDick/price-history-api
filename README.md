@@ -1,3 +1,12 @@
+The two endpoints to get familiar with right now:
+
+`GET /prices/<PRICE TYPE>/average?asins=<COMMA SEPARATED LIST OF ASINS>`
+  Returns an average price for an asin. Acceptable price types are: `used`, `new`, `trade`, and `amazon`
+
+`GET /prices/<PRICE TYPE>/all?asins=<COMMA SEPARATED LIST OF ASINS>`
+  Returns all recorded prices for an asin. Format is {timestamp: value}.
+
+
 To pull down a sample set of prod data and add it to your local Redis, run ```bundle exec rake db:seed```.
 
 A couple of quick notes about this repo:
